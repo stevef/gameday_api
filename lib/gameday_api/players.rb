@@ -37,6 +37,12 @@ module GamedayApi
       @umpires['first'] = @xml_doc.root.elements["umpires/umpire[@position='first']"].attributes["name"]
       @umpires['second'] = @xml_doc.root.elements["umpires/umpire[@position='second']"].attributes["name"]
       @umpires['third'] = @xml_doc.root.elements["umpires/umpire[@position='third']"].attributes["name"]
+
+      # add ump IDs
+      @umpires['home_id'] = @xml_doc.root.elements["umpires/umpire[@position='home']"].attributes["id"]
+      @umpires['first_id'] = @xml_doc.root.elements["umpires/umpire[@position='first']"].attributes["id"]
+      @umpires['second_id'] = @xml_doc.root.elements["umpires/umpire[@position='second']"].attributes["id"]
+      @umpires['third_id'] = @xml_doc.root.elements["umpires/umpire[@position='third']"].attributes["id"]
     end
   
   
