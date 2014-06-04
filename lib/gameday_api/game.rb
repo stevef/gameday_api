@@ -45,7 +45,7 @@ module GamedayApi
           @time = @xml_doc.root.attributes["local_game_time"]     
           info = GamedayUtil.parse_gameday_id('gid_'+gid)
           @home_team_abbrev = info["home_team_abbrev"]
-          @stadium_id = @xml_doc.root.elements['stadium/@id']
+          @stadium_id = @xml_doc.root.elements['stadium'].attributes['id']
           @visit_team_abbrev = info["visiting_team_abbrev"]
           @visiting_team = Team.new(@visit_team_abbrev )
           @home_team = Team.new(@home_team_abbrev )
