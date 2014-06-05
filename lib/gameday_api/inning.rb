@@ -14,6 +14,8 @@ module GamedayApi
     def load_from_id(gid, inning)
       @top_atbats = []
       @bottom_atbats = []
+      @top_actions = []
+      @bottom_actions = []
       @gid = gid
       begin
         @xml_data = GamedayFetcher.fetch_inningx(gid, inning)
