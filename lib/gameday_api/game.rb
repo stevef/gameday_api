@@ -455,6 +455,20 @@ module GamedayApi
       end
       atbats
     end
+
+    def get_actions
+      actions = []
+      innings = get_innings
+      innings.each do |inning|
+        inning.top_actions.each do |action|
+          actions << action
+        end
+        inning.bottom_actions.each do |action|
+          actions << action
+        end
+      end
+      actions
+    end
   
   
     def get_hitchart
