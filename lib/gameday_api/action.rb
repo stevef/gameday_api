@@ -5,7 +5,7 @@ module GamedayApi
   # This class represents a single action during a single game
   class Action
   
-    attr_accessor :gid, :inning
+    attr_accessor :gid, :inning, :at_bat_num
     attr_accessor :num, :b, :s, :o, :batter_id, :pitcher_id, :p_throws, :des, :event
   
     def init(element, gid, inning, atbat)
@@ -21,6 +21,7 @@ module GamedayApi
       @pitch_number = element.attributes["pitch"]
       @atbat = atbat
       @pitcher_id = @atbat.pitcher_id
+      @at_bat_num = @atbat.num
       @p_throws = @atbat.p_throws
     end
   
