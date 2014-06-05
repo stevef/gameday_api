@@ -6,7 +6,7 @@ module GamedayApi
   class Action
   
     attr_accessor :gid, :inning, :at_bat_num
-    attr_accessor :num, :b, :s, :o, :batter_id, :pitcher_id, :p_throws, :des, :event
+    attr_accessor :num, :b, :s, :o, :player_id, :pitcher_id, :p_throws, :des, :event
   
     def init(element, gid, inning, atbat)
       @inning = inning
