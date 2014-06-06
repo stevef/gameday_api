@@ -7,6 +7,7 @@ module GamedayApi
     attr_accessor :gid, :inning, :away_team, :home_team
     attr_accessor :num, :b, :s, :o, :batter_id, :stand, :b_height, :pitcher_id, :p_throws, :des, :event
     attr_accessor :pitches
+    attr_accessor :home_starting_pitcher_id, :visiting_starting_pitcher_id
   
     def init(element, gid, inning)
       @inning = inning

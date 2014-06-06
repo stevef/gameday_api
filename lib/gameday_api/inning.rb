@@ -8,7 +8,7 @@ module GamedayApi
   class Inning
   
     attr_accessor :gid, :num, :away_team, :home_team, :top_atbats, :bottom_atbats, :top_actions, :bottom_actions
-  
+
   
     # loads an Inning object given a game id and an inning number
     def load_from_id(gid, inning)
@@ -41,6 +41,9 @@ module GamedayApi
       @xml_doc.elements.each("inning/top/atbat") { |element| 
         atbat = AtBat.new
         atbat.init(element, @gid, @num)
+        if @num.to_i == 1
+          atbat.home_starting_pitcher_id = element.attributes["pitcher"]
+        end
         @top_atbats.push atbat
       }
     end
@@ -50,6 +53,9 @@ module GamedayApi
       @xml_doc.elements.each("inning/bottom/atbat") { |element| 
         atbat = AtBat.new
         atbat.init(element, @gid, @num)
+        if @num.to_i == 1
+          atbat.visiting_starting_pitcher_id = element.attributes["pitcher"]
+        end
         @bottom_atbats.push atbat
       }
     end
