@@ -20,41 +20,37 @@ module GamedayApi
       @gid = gid
       begin
         @xml_data = GamedayFetcher.fetch_inningx(gid, inning)
+        @xml_data_first_inning = GamedayFetcher.fetch_inningx(gid, 1)
+        @xml_first_inning = REXML::Document.new(@xml_data_first_inning)
         @xml_doc = REXML::Document.new(@xml_data)
         if @xml_doc.root
           @num = @xml_doc.root.attributes["num"]
           @away_team = @xml_doc.root.attributes["away_team"]
           @home_team = @xml_doc.root.attributes["home_team"]
-          set_home_sp
-          set_visiting_sp
+          set_home_sp(@xml_first_inning)
+          set_visiting_sp(@xml_first_inning)
           set_top_ab
           set_bottom_ab
           set_top_actions
           set_bottom_actions
         end
-      rescue
-        puts "Could not load inning file for #{gid}, inning #{inning.to_s}"
+      rescue Exception => err
+        puts "Could not load inning file for #{gid}, inning #{inning.to_s} - #{err.inspect}"
       end
     end
   
   
     private
 
-    def set_home_sp
-      @xml_doc.elements.each("inning/top/atbat") { |element| 
-        if @num.to_i == 1
-          @home_sp_id = element.attributes["pitcher"]
-          return
-        end
+    def set_home_sp(first_inning)
+      first_inning.elements.each("inning/top/atbat") { |element| 
+        @home_sp_id = element.attributes["pitcher"]
       }
     end
 
-    def set_visiting_sp
-      @xml_doc.elements.each("inning/bottom/atbat") { |element| 
-        if @num.to_i == 1
-          @visiting_sp_id = element.attributes["pitcher"]
-          return
-        end
+    def set_visiting_sp(first_inning)
+      first_inning.elements.each("inning/bottom/atbat") { |element| 
+        @visiting_sp_id = element.attributes["pitcher"]
       }
     end
   
@@ -73,10 +69,10 @@ module GamedayApi
       @xml_doc.elements.each("inning/bottom/atbat") { |element| 
         atbat = AtBat.new
         atbat.init(element, @gid, @num)
+        atbat.home_starting_pitcher_id = @home_sp_id
+        atbat.visiting_starting_pitcher_id = @visiting_sp_id
         @bottom_atbats.push atbat
       }
-      atbat.home_starting_pitcher_id = @home_sp_id
-      atbat.visiting_starting_pitcher_id = @visiting_sp_id
     end
 
     def set_top_actions
