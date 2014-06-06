@@ -7,7 +7,7 @@ module GamedayApi
   
     # attributes from players.xml
     attr_accessor :gid, :pid, :first, :last, :num, :boxname, :rl, :position, :status, :bat_order, :game_position 
-    attr_accessor :avg, :hr, :std_hr, :rbi, :wins, :losses, :era, :saves, :team_code
+    attr_accessor :avg, :hr, :std_hr, :rbi, :wins, :losses, :era, :saves, :team_code, :bats
   
     # attributes from batters/13353333.xml or pitchers/1222112.xml
     attr_accessor :team_abbrev, :type, :height, :weight, :bats, :throws, :dob
@@ -98,6 +98,7 @@ module GamedayApi
       @pid = element.attributes['id']
       @first = element.attributes['first']
       @last = element.attributes['last']
+      @bats = element.attributes['bats']
       @num= element.attributes['num']
       @boxname = element.attributes['boxname']
       @rl, = element.attributes['rl']
