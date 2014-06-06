@@ -8,6 +8,7 @@ module GamedayApi
   class Inning
   
     attr_accessor :gid, :num, :away_team, :home_team, :top_atbats, :bottom_atbats, :top_actions, :bottom_actions
+    attr_accessor :home_sp_id, :visiting_sp_id
 
   
     # loads an Inning object given a game id and an inning number
@@ -24,6 +25,8 @@ module GamedayApi
           @num = @xml_doc.root.attributes["num"]
           @away_team = @xml_doc.root.attributes["away_team"]
           @home_team = @xml_doc.root.attributes["home_team"]
+          set_home_sp
+          set_visiting_sp
           set_top_ab
           set_bottom_ab
           set_top_actions
@@ -36,14 +39,31 @@ module GamedayApi
   
   
     private
+
+    def set_home_sp
+      @xml_doc.elements.each("inning/top/atbat") { |element| 
+        if @num.to_i == 1
+          @home_sp_id = element.attributes["pitcher"]
+          return
+        end
+      }
+    end
+
+    def set_visiting_sp
+      @xml_doc.elements.each("inning/bottom/atbat") { |element| 
+        if @num.to_i == 1
+          @visiting_sp_id = element.attributes["pitcher"]
+          return
+        end
+      }
+    end
   
     def set_top_ab
       @xml_doc.elements.each("inning/top/atbat") { |element| 
         atbat = AtBat.new
         atbat.init(element, @gid, @num)
-        if @num.to_i == 1
-          atbat.home_starting_pitcher_id = element.attributes["pitcher"]
-        end
+        atbat.home_starting_pitcher_id = @home_sp_id
+        atbat.visiting_starting_pitcher_id = @visiting_sp_id
         @top_atbats.push atbat
       }
     end
@@ -53,11 +73,10 @@ module GamedayApi
       @xml_doc.elements.each("inning/bottom/atbat") { |element| 
         atbat = AtBat.new
         atbat.init(element, @gid, @num)
-        if @num.to_i == 1
-          atbat.visiting_starting_pitcher_id = element.attributes["pitcher"]
-        end
         @bottom_atbats.push atbat
       }
+      atbat.home_starting_pitcher_id = @home_sp_id
+      atbat.visiting_starting_pitcher_id = @visiting_sp_id
     end
 
     def set_top_actions
