@@ -21,6 +21,11 @@ module GamedayApi
       url = GamedayUrlBuilder.build_epg_url(year, month, day)
       fetch(url)
     end
+
+    def self.fetch_pitcher_byyear(year, pid)
+      url = GamedayUrlBuilder.build_pitcher_byyear_url(year, pid)
+      fetch(url)
+    end
   
   
     # Fetch the master scoreboard file

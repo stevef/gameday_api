@@ -176,6 +176,10 @@ module GamedayApi
     def self.fetch_pitcher(gid, pid)
       GamedayUtil.fetcher.fetch_pitcher(gid, pid)
     end
+
+    def self.fetch_pitcher_byyear(year, pid)
+      GamedayUtil.fetcher.fetch_pitcher_byyear(year, pid)
+    end
   
     #     inning/inning_X.xml 
     def self.fetch_inningx(gid, inning_num)

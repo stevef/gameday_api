@@ -81,6 +81,11 @@ module GamedayApi
       set_date_vars(year, month, day)
       "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year.to_s + "/month_" + @@month.to_s + "/day_" + @@day.to_s + "/gid_"+gid+"/pitchers/" +  pid.to_s + '.xml' 
     end
+
+    def self.build_pitcher_byyear_url(year, pid)
+      set_date_vars(year, nil, nil)
+      "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year.to_s + "/pitchers/" +  pid.to_s + '.xml' 
+    end
   
   
     def self.build_inningx_url(year, month, day, gid, inning_num)
@@ -110,6 +115,11 @@ module GamedayApi
     def self.build_month_url(year, month)
       set_date_vars(year, month, nil)
       "#{Gameday::GD2_MLB_BASE}/mlb/year_#{@@year}/month_#{@@month}/"
+    end
+
+    def self.build_year_url(year)
+      set_date_vars(year)
+      "#{Gameday::GD2_MLB_BASE}/mlb/year_#{@@year}/"
     end
   
   
