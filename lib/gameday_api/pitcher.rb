@@ -7,11 +7,12 @@ module GamedayApi
   
     # attributes read from the pitchers/(pid).xml file
     attr_accessor :team_abbrev, :gid, :pid, :first_name, :last_name, :jersey_number
+    attr_accessor :era, :ip, :hits, :runs, :bb, :so, :sv,  :hr
     attr_accessor :height, :weight, :bats, :throws, :dob, :position
     attr_accessor :opponent_season, :opponent_career, :opponent_empty, :opponent_men_on, :opponent_risp
     attr_accessor :opponent_loaded, :opponent_vs_l, :opponent_vs_r
   
-    attr_accessor :game
+    attr_accessor :game, :fip
   
   
     # Loads a Pitcher object given a game id and a player id
@@ -31,6 +32,24 @@ module GamedayApi
       @throws = @xml_doc.root.attributes["throws"]
       @dob = @xml_doc.root.attributes['dob']
       set_opponent_stats
+      @fip = get_fip('game')
+    end
+
+    def load_from_year_id(year, pid)
+      @gid = gid
+      @pid = pid
+      @position = 'P'
+      @xml_data = GamedayFetcher.fetch_pitcher_byyear(year, pid)
+      @xml_doc = REXML::Document.new(@xml_data)
+      @era = @xml_doc.root.attributes["era"]
+      @ip = @xml_doc.root.attributes["s_ip"]
+      @hits = @xml_doc.root.attributes["s_h"]
+      @bb = @xml_doc.root.attributes["s_bb"]
+      @so = @xml_doc.root.attributes["s_k"]
+      @sv = @xml_doc.root.attributes["s_sv"]
+      @hr = @xml_doc.root.attributes["s_hra"]
+
+      @fip = get_fip('year')
     end
   
     # Returns an array of PitchingAppearance objects for all of the pitchers starts
@@ -42,18 +61,20 @@ module GamedayApi
       end
     end
 
-    def get_fip(time)
-      if time == 'season'
-        fip_hr = @opponent_season.hr.to_i * 13
-        fip_walks = @opponent_season.bb.to_i * 3
-        fip_so = @opponent_season.so.to_i * 2
+
+
+    def get_fip(game_or_year)
+      if game_or_year == 'game'
+        fip_hr = @opponent_season.hr.to_f * 13
+        fip_walks = @opponent_season.bb.to_f * 3
+        fip_so = @opponent_season.so.to_f * 2
         fip_ip = @opponent_season.ip.to_f
         fip = (((fip_hr + fip_walks) - fip_so)/fip_ip) + 3.2
-      elsif time == 'career'
-        fip_hr = @opponent_season.hr.to_i * 13
-        fip_walks = @opponent_season.bb.to_i * 3
-        fip_so = @opponent_season.so.to_i * 2
-        fip_ip = @opponent_season.ip.to_f
+      else
+        fip_hr = @hr.to_f * 13
+        fip_walks = @bb.to_f * 3
+        fip_so = @so.to_f * 2
+        fip_ip = @ip.to_f
         fip = (((fip_hr + fip_walks) - fip_so)/fip_ip) + 3.2
       end
     end
