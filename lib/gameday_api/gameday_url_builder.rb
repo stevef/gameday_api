@@ -79,7 +79,7 @@ module GamedayApi
   
     def self.build_pitcher_url(year, month, day, gid, pid)
       set_date_vars(year, month, day)
-      "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/pitchers/" +  pid + '.xml' 
+      "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year.to_s + "/month_" + @@month.to_s + "/day_" + @@day.to_s + "/gid_"+gid+"/pitchers/" +  pid.to_s + '.xml' 
     end
   
   

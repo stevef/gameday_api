@@ -33,13 +33,28 @@ module GamedayApi
       set_opponent_stats
     end
   
-  
     # Returns an array of PitchingAppearance objects for all of the pitchers starts
     def get_all_starts(year)
       results = []
       app = get_all_appearances(year)
       if app.start == true
         results << app
+      end
+    end
+
+    def get_fip(time)
+      if time == 'season'
+        fip_hr = @opponent_season.hr.to_i * 13
+        fip_walks = @opponent_season.bb.to_i * 3
+        fip_so = @opponent_season.so.to_i * 2
+        fip_ip = @opponent_season.ip.to_f
+        fip = (((fip_hr + fip_walks) - fip_so)/fip_ip) + 3.2
+      elsif time == 'career'
+        fip_hr = @opponent_season.hr.to_i * 13
+        fip_walks = @opponent_season.bb.to_i * 3
+        fip_so = @opponent_season.so.to_i * 2
+        fip_ip = @opponent_season.ip.to_f
+        fip = (((fip_hr + fip_walks) - fip_so)/fip_ip) + 3.2
       end
     end
   
@@ -66,7 +81,6 @@ module GamedayApi
       end
       results.flatten
     end
-  
   
     def get_game
       if !@game
@@ -118,7 +132,7 @@ module GamedayApi
 
 
   class OpponentStats
-    attr_accessor :des, :avg, :ab, :hr, :bb, :so
+    attr_accessor :des, :avg, :ab, :hr, :bb, :so, :ip
   
     def initialize(element)
       if element.attributes['des']
@@ -129,6 +143,7 @@ module GamedayApi
       @hr = element.attributes['hr']
       @bb = element.attributes['bb']
       @so = element.attributes['so']
+      @ip = element.attributes['ip']
     end
   end
 end
