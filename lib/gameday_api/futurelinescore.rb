@@ -6,8 +6,8 @@ module GamedayApi
   class FutureLineScore
   
     attr_accessor :xml_doc
-    attr_accessor :away_team_runs, :home_team_runs, :away_team_hits, :home_team_hits, :away_team_errors, :home_team_errors
-    attr_accessor :home_pitcher, :venue
+    attr_accessor :home_team_name, :away_team_name
+    attr_accessor :home_pitcher, :away_pitcher, :venue
 
     def load_from_id(gid)
       @gid = gid
@@ -15,6 +15,8 @@ module GamedayApi
       @xml_doc = REXML::Document.new(@xml_data)
 
       @venue = @xml_doc.root.attributes["venue"]
+      @home_team_name = @xml_doc.root.attributes["home_team_name"]
+      @away_team_name = @xml_doc.root.attributes["away_team_name"]
       set_pitchers
     end
 
