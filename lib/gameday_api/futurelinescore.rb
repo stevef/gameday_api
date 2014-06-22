@@ -6,7 +6,7 @@ module GamedayApi
   class FutureLineScore
   
     attr_accessor :xml_doc
-    attr_accessor :home_team_name, :away_team_name
+    attr_accessor :home_team_name, :away_team_name, :home_team_abbr, :away_team_abbr
     attr_accessor :home_pitcher, :away_pitcher, :venue
 
     def load_from_id(gid)
@@ -17,6 +17,8 @@ module GamedayApi
       @venue = @xml_doc.root.attributes["venue"]
       @home_team_name = @xml_doc.root.attributes["home_team_name"]
       @away_team_name = @xml_doc.root.attributes["away_team_name"]
+      @home_team_abbr = @xml_doc.root.attributes["home_code"]
+      @away_team_abbr = @xml_doc.root.attributes["away_code"]
       set_pitchers
     end
 
