@@ -101,8 +101,8 @@ module GamedayApi
             if !GamedayUtil.is_date_valid(month, date)
               next
             end
-            date_s = GamedayUtil.convert_digit_to_string(date)
-            games = games_for_date(year, month_s, date_s)
+            #date_s = GamedayUtil.convert_digit_to_string(date)
+            games = games_for_date(year, month.to_s, date.to_s)
             if games
               # make sure game was not postponed
               good_games = games.select { |g| g.get_boxscore.status_ind != 'P' }
@@ -274,7 +274,26 @@ module GamedayApi
   
     # Returns an array of all the games for this team for the year and month specified
     def get_games_for_month(year, month)
-    
+      if !@games
+        puts "Finding all games for team in #{month}..."
+        results = []
+          (1..31).each do |date|
+            if !GamedayUtil.is_date_valid(month, date)
+              next
+            end
+            #date_s = GamedayUtil.convert_digit_to_string(date)
+            games = games_for_date(year, month.to_s, date.to_s)
+            if games
+              # make sure game was not postponed
+              good_games = games.select { |g| g.get_boxscore.status_ind != 'P' }
+              good_games.each do |game|
+                results << game
+              end
+            end
+          end
+        @games = results
+      end
+      @games
     end
   
   
