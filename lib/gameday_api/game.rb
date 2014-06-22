@@ -64,7 +64,8 @@ module GamedayApi
             @visit_team_name = @visit_team_abbrev
           end
         else
-          raise ArgumentError, "Could not find game.xml"
+          #raise ArgumentError, "Could not find game.xml"
+          return false
         end
       end
     end
