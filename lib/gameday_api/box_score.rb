@@ -190,6 +190,7 @@ module GamedayApi
     def set_weather
       @game_info =~ /<br\/><b>Weather<\/b>: (\d+) degrees,(.*)<br\/><b>Wind<\/b>: (\d+) mph, ([\w\s]+).<br\/>/
       @temp = $1
+      @dome = $2
       @wind_speed = $3
       @wind_dir = $4
     end  
