@@ -529,14 +529,19 @@ module GamedayApi
       bs = get_boxscore 
       bs.wind_dir
     end
+
+    def get_dome
+      bs = get_boxscore
+      bs.dome
+    end
   
   
     def get_home_runs
       bs = get_boxscore
       bs.home_runs
     end
-   
-   
+
+
     def get_away_runs
       bs = get_boxscore
       bs.away_runs

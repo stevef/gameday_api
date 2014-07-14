@@ -22,7 +22,7 @@ module GamedayApi
   
     attr_accessor :home_runs, :away_runs
   
-    attr_accessor :temp, :wind_speed, :wind_dir
+    attr_accessor :temp, :wind_speed, :wind_dir, :dome
   
     # complex attributes
     attr_accessor :innings, :cities, :linescore_totals, :pitchers, :batters
