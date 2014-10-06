@@ -81,7 +81,7 @@ module GamedayApi
        action = Action.new
        at_bat = REXML::XPath.first(element, 'following-sibling::atbat[1]')
        atbat = AtBat.new
-       atbat.init(at_bat, @gid, @num)
+       atbat.init(at_bat, @gid, @num, 1)
        action.init(element, @gid, @num, atbat)
        @top_actions.push action
       }
@@ -93,7 +93,7 @@ module GamedayApi
        at_bat = REXML::XPath.first(element, 'following-sibling::atbat[1]')
        atbat = AtBat.new
        atbat.init(at_bat, @gid, @num)
-       action.init(element, @gid, @num, atbat)
+       action.init(element, @gid, @num, atbat, 0)
        @bottom_actions.push action
       }
     end
