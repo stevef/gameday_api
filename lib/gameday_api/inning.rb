@@ -56,7 +56,7 @@ module GamedayApi
     def set_top_ab
       @xml_doc.elements.each("inning/top/atbat") { |element| 
         atbat = AtBat.new
-        atbat.init(element, @gid, @num)
+        atbat.init(element, @gid, @num, 1)
         atbat.home_starting_pitcher_id = @home_sp_id
         atbat.visiting_starting_pitcher_id = @visiting_sp_id
         @top_atbats.push atbat
@@ -67,7 +67,7 @@ module GamedayApi
     def set_bottom_ab
       @xml_doc.elements.each("inning/bottom/atbat") { |element| 
         atbat = AtBat.new
-        atbat.init(element, @gid, @num)
+        atbat.init(element, @gid, @num, 0)
         atbat.home_starting_pitcher_id = @home_sp_id
         atbat.visiting_starting_pitcher_id = @visiting_sp_id
         @bottom_atbats.push atbat
@@ -90,8 +90,8 @@ module GamedayApi
        action = Action.new
        at_bat = REXML::XPath.first(element, 'following-sibling::atbat[1]')
        atbat = AtBat.new
-       atbat.init(at_bat, @gid, @num)
-       action.init(element, @gid, @num, atbat, 0)
+       atbat.init(at_bat, @gid, @num, 0)
+       action.init(element, @gid, @num, atbat)
        @bottom_actions.push action
       }
     end
