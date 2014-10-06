@@ -28,8 +28,6 @@ module GamedayApi
           @home_team = @xml_doc.root.attributes["home_team"]
           set_home_sp(@xml_first_inning)
           set_visiting_sp(@xml_first_inning)
-          set_home_catcher
-          set_visiting_catcher
           set_top_ab
           set_bottom_ab
           set_top_actions
