@@ -32,6 +32,7 @@ module GamedayApi
     attr_accessor :winning_pitcher, :losing_pitcher, :save_pitcher  # Instances of Player object
     attr_accessor :away_innings, :home_innings  # An arry of one element for each inning, the element is the home or away score
     attr_accessor :home_hits, :away_hits, :home_errors, :away_errors, :home_runs, :away_runs
+    attr_accessor :starting_home_catcher_id, :starting_away_catcher_id
   
     def initialize(gid)
       @innings = []
@@ -114,6 +115,7 @@ module GamedayApi
         set_totals(element)
         set_pitchers(element)
         set_homeruns(element)
+        set_starting_catchers
       end
     
     
@@ -130,6 +132,14 @@ module GamedayApi
           @status.s = status.attributes['s']
           @status.o = status.attributes['o']
         }
+      end
+
+      def set_starting_catchers
+        rosters = get_rosters
+        away_roster = rosters[0]
+        home_roster = rosters[1]
+        @starting_home_catcher_id = home_roster.players.find {|p| p if p.game_position=='C'}.pid
+        @starting_away_catcher_id = away_roster.players.find {|p| p if p.game_position=='C'}.pid
       end
     
     

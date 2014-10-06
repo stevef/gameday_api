@@ -9,7 +9,6 @@ module GamedayApi
   
     attr_accessor :gid, :num, :away_team, :home_team, :top_atbats, :bottom_atbats, :top_actions, :bottom_actions
     attr_accessor :home_sp_id, :visiting_sp_id
-
   
     # loads an Inning object given a game id and an inning number
     def load_from_id(gid, inning)
@@ -29,6 +28,8 @@ module GamedayApi
           @home_team = @xml_doc.root.attributes["home_team"]
           set_home_sp(@xml_first_inning)
           set_visiting_sp(@xml_first_inning)
+          set_home_catcher
+          set_visiting_catcher
           set_top_ab
           set_bottom_ab
           set_top_actions
