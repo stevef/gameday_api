@@ -111,6 +111,14 @@ module GamedayApi
       set_date_vars(year, month, nil)
       "#{Gameday::GD2_MLB_BASE}/mlb/year_#{@@year}/month_#{@@month}/"
     end
+
+    # MINOR LEAGUE URLs
+    http://gd2.mlb.com/components/game/aaa/year_2014/month_08/day_07/
+    def self.build_aaa_url(year, month)
+      set_date_vars(year, month, nil)
+      "#{Gameday::GD2_MLB_BASE}/mlb/year_#{@@year}/month_#{@@month}/"
+    end
+
   
   
     private
