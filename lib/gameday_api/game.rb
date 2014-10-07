@@ -457,9 +457,11 @@ module GamedayApi
       innings = get_innings
       innings.each do |inning|
         inning.top_atbats.each do |atbat|
+          atbat.is_top = 1
           atbats << atbat
         end
         inning.bottom_atbats.each do |atbat|
+          atbat.is_top = 0
           atbats << atbat
         end
       end
