@@ -33,6 +33,13 @@ module GamedayApi
     attr_accessor :away_innings, :home_innings  # An arry of one element for each inning, the element is the home or away score
     attr_accessor :home_hits, :away_hits, :home_errors, :away_errors, :home_runs, :away_runs
     attr_accessor :starting_home_catcher_id, :starting_away_catcher_id
+    attr_accessor :starting_home_rf_id, :starting_away_rf_id
+    attr_accessor :starting_home_lf_id, :starting_away_lf_id
+    attr_accessor :starting_home_cf_id, :starting_away_cf_id
+    attr_accessor :starting_home_first_id, :starting_away_first_id
+    attr_accessor :starting_home_second_id, :starting_away_second_id
+    attr_accessor :starting_home_third_id, :starting_away_third_id
+    attr_accessor :starting_home_ss_id, :starting_away_ss_id
   
     def initialize(gid)
       @innings = []
@@ -115,7 +122,7 @@ module GamedayApi
         set_totals(element)
         set_pitchers(element)
         set_homeruns(element)
-        set_starting_catchers
+        set_starting_players
       end
     
     
@@ -134,12 +141,26 @@ module GamedayApi
         }
       end
 
-      def set_starting_catchers
+      def set_starting_players
         rosters = get_rosters
         away_roster = rosters[0]
         home_roster = rosters[1]
         @starting_home_catcher_id = home_roster.players.find {|p| p if p.game_position=='C'}.pid
         @starting_away_catcher_id = away_roster.players.find {|p| p if p.game_position=='C'}.pid
+        @starting_home_first_id = home_roster.players.find {|p| p if p.game_position=='1B'}.pid
+        @starting_away_first_id = away_roster.players.find {|p| p if p.game_position=='1B'}.pid
+        @starting_home_second_id = home_roster.players.find {|p| p if p.game_position=='2B'}.pid
+        @starting_away_second_id = away_roster.players.find {|p| p if p.game_position=='2B'}.pid
+        @starting_home_third_id = home_roster.players.find {|p| p if p.game_position=='3B'}.pid
+        @starting_away_third_id = away_roster.players.find {|p| p if p.game_position=='3B'}.pid
+        @starting_home_ss_id = home_roster.players.find {|p| p if p.game_position=='3B'}.pid
+        @starting_away_ss_id = away_roster.players.find {|p| p if p.game_position=='3B'}.pid
+        @starting_home_lf_id = home_roster.players.find {|p| p if p.game_position=='LF'}.pid
+        @starting_away_lf_id = away_roster.players.find {|p| p if p.game_position=='LF'}.pid
+        @starting_home_cf_id = home_roster.players.find {|p| p if p.game_position=='CF'}.pid
+        @starting_away_cf_id = away_roster.players.find {|p| p if p.game_position=='CF'}.pid
+        @starting_home_rf_id = home_roster.players.find {|p| p if p.game_position=='RF'}.pid
+        @starting_away_rf_id = away_roster.players.find {|p| p if p.game_position=='RF'}.pid
       end
     
     
