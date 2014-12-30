@@ -153,8 +153,8 @@ module GamedayApi
         @starting_away_second_id = away_roster.players.find {|p| p if p.game_position=='2B'}.pid
         @starting_home_third_id = home_roster.players.find {|p| p if p.game_position=='3B'}.pid
         @starting_away_third_id = away_roster.players.find {|p| p if p.game_position=='3B'}.pid
-        @starting_home_ss_id = home_roster.players.find {|p| p if p.game_position=='3B'}.pid
-        @starting_away_ss_id = away_roster.players.find {|p| p if p.game_position=='3B'}.pid
+        @starting_home_ss_id = home_roster.players.find {|p| p if p.game_position=='SS'}.pid
+        @starting_away_ss_id = away_roster.players.find {|p| p if p.game_position=='SS'}.pid
         @starting_home_lf_id = home_roster.players.find {|p| p if p.game_position=='LF'}.pid
         @starting_away_lf_id = away_roster.players.find {|p| p if p.game_position=='LF'}.pid
         @starting_home_cf_id = home_roster.players.find {|p| p if p.game_position=='CF'}.pid
