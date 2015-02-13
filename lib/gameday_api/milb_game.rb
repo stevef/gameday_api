@@ -255,7 +255,8 @@ module GamedayApi
               begin
                 game = Game.new(gid)
                 games.push game
-              rescue
+              rescue Exception => err
+                puts "err: #{err}"
                 puts "Could not create game object for #{year}, #{month}, #{day} - #{gid}"
               end
             end
