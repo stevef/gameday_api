@@ -11,6 +11,7 @@ module GamedayApi
 
     # Change this to point to the server you are reading Gameday data from
     GD2_MLB_BASE = "http://gd2.mlb.com/components/game"
+    GD2_MILB_BASE = "http://gd2.mlb.com/components/game/aaa"
     
     
     def initialize

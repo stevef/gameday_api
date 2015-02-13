@@ -199,6 +199,12 @@ module GamedayApi
     def self.fetch_games_page(year, month, day)
       GamedayUtil.fetcher.fetch_games_page(year, month, day)
     end
+
+    # Fetches the MiLB HTML page that lists all games for the specified date
+    def self.fetch_milb_games_page(year, month, day)
+      GamedayUtil.fetcher.fetch_milb_games_page(year, month, day)
+    end
+  
   
   
     # Fetches the HTML page that lists all games for the specified date

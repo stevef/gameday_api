@@ -289,6 +289,14 @@ module GamedayApi
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
     end
+
+    # MiLB specific URLs
+    def self.fetch_milb_games_page(year, month, day)
+      url = GamedayUrlBuilder.build_milb_day_url(year, month, day)
+      fetch(url)
+      #fetcher = CacheFetcher.new()
+      #return fetcher.fetch(url)
+    end
   end
   
 end
