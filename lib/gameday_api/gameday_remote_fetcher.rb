@@ -95,6 +95,15 @@ module GamedayApi
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
     end
+
+     # Fetches the game.xml file and returns its contents
+    def self.fetch_milb_game_xml(gid)
+      gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+      url = GamedayUrlBuilder.build_milb_game_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
+      fetch(url)
+      #fetcher = CacheFetcher.new()
+      #return fetcher.fetch(url)
+    end
   
   
     def self.fetch_game_events(gid)

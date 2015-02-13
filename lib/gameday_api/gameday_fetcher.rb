@@ -119,6 +119,11 @@ module GamedayApi
     def self.fetch_game_xml(gid)
       GamedayUtil.fetcher.fetch_game_xml(gid)
     end
+
+    def self.fetch_milb_game_xml(gid)
+      GamedayUtil.fetcher.fetch_milb_game_xml(gid)
+    end
+
   
   
     def self.fetch_game_events(gid)

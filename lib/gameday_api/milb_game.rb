@@ -46,7 +46,7 @@ module GamedayApi
       team = Team.new('')
       if gid
         @gid = gid     
-        @xml_data = GamedayFetcher.fetch_game_xml(gid)
+        @xml_data = GamedayFetcher.fetch_milb_game_xml(gid)
         if @xml_data && @xml_data.size > 0
           @xml_doc = REXML::Document.new(@xml_data)
           @game_type = @xml_doc.root.attributes["type"]
