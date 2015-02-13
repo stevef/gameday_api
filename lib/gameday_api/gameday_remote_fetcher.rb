@@ -100,6 +100,7 @@ module GamedayApi
     def self.fetch_milb_game_xml(gid)
       gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
       url = GamedayUrlBuilder.build_milb_game_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
+      puts "milb_game_xml: #{url}"
       fetch(url)
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
