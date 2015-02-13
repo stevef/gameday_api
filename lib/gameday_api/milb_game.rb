@@ -253,7 +253,7 @@ module GamedayApi
               str = link.inner_html
               gid = str[5..str.length-2]
               begin
-                game = Game.new(gid)
+                game = MilbGame.new(gid)
                 games.push game
               rescue Exception => err
                 puts "err: #{err}"
