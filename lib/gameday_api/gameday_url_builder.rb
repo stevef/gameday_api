@@ -120,7 +120,12 @@ module GamedayApi
 
     def self.build_milb_day_url(year, month, day)
       set_date_vars(year, month, day)
-      "#{Gameday::GD2_MLB_BASE}/mlb/year_#{@@year}/month_#{@@month}/day_#{@@day}/"
+      "#{Gameday::GD2_MLB_BASE}/year_#{@@year}/month_#{@@month}/day_#{@@day}/"
+    end
+
+    def self.build_milb_game_url(year, month, day, gid)
+      set_date_vars(year, month, day)
+      "#{Gameday::GD2_MILB_BASE}/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/game.xml" 
     end
   
 
