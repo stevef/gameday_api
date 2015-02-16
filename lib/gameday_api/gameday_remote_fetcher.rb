@@ -303,7 +303,6 @@ module GamedayApi
     # MiLB specific URLs
     def self.fetch_milb_games_page(year, month, day)
       url = GamedayUrlBuilder.build_milb_day_url(year, month, day)
-      puts "url is: #{url}"
       fetch(url)
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
