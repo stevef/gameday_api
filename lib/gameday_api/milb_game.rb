@@ -300,6 +300,7 @@ module GamedayApi
         box.load_from_id(self.gid)
         @boxscore = box
       end
+      puts "GOT BOXSCORE: #{@boxscore}"
       @boxscore
     end
   
