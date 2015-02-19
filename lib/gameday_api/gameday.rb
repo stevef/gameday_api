@@ -6,6 +6,7 @@ require 'gameday_api/game'
 require 'gameday_api/milb_game'
 require 'gameday_api/team'
 require 'gameday_api/box_score'
+require 'gameday_api/milb_box_score'
 
 module GamedayApi
   class Gameday
