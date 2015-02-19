@@ -66,6 +66,14 @@ module GamedayApi
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
     end
+
+    def self.fetch_milb_boxscore(gid)
+      gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+      url = GamedayUrlBuilder.build_milb_boxscore_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
+      fetch(url)
+      #fetcher = CacheFetcher.new()
+      #return fetcher.fetch(url)
+    end
   
   
     # Fetch the emailSource.xml file
