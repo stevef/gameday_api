@@ -99,7 +99,10 @@ module GamedayApi
     def self.fetch_boxscore(gid)
       GamedayUtil.fetcher.fetch_boxscore(gid)
     end
-  
+
+    def self.fetch_milb_boxscore(gid)
+      GamedayUtil.fetcher.fetch_milb_boxscore(gid)
+    end
   
     # Fetch the emailSource.xml file
     # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/emailSource.xml

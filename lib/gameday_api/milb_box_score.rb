@@ -31,7 +31,7 @@ module GamedayApi
     # Loads the boxscore XML from the MLB gameday server and parses it using REXML
     def load_from_id(gid)
       @gid = gid
-      @xml_data = GamedayFetcher.fetch_boxscore(gid)
+      @xml_data = GamedayFetcher.fetch_milb_boxscore(gid)
       @xml_doc = REXML::Document.new(@xml_data)
       if @xml_doc.root
         @game = MilbGame.new(@gid)
