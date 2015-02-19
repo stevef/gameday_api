@@ -296,11 +296,11 @@ module GamedayApi
     # Returns a BoxScore object representing the boxscore for this game
     def get_boxscore
       if !@boxscore
-        box = BoxScore.new
+        box = MilbBoxScore.new
         box.load_from_id(self.gid)
         @boxscore = box
       end
-      puts "GOT BOXSCORE: #{@boxscore}"
+      puts "GOT BOXSCORE: #{@boxscore.inspect}"
       @boxscore
     end
   
