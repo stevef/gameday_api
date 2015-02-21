@@ -1,6 +1,6 @@
 require 'gameday_api/gameday_util'
 require 'gameday_api/team'
-require 'gameday_api/players'
+require 'gameday_api/milb_players'
 require 'gameday_api/game_status'
 require 'gameday_api/event_log'
 require 'gameday_api/inning'
@@ -535,7 +535,7 @@ module GamedayApi
     #
     def get_umpires
       if !@players
-        @players = Players.new
+        @players = MilbPlayers.new
         @players.load_from_id(@gid)
       end
       @players.umpires
