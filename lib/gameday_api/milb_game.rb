@@ -61,6 +61,8 @@ module GamedayApi
           @month = info["month"]
           @day = info["day"]
           @game_number = info["game_number"]
+          @league = @xml_doc.root.elements['team'].attributes['league']
+
           if Team.teams[@home_team_abbrev]
             @home_team_name = Team.teams[@home_team_abbrev][0]
           else
