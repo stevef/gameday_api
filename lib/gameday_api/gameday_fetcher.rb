@@ -165,6 +165,10 @@ module GamedayApi
     def self.fetch_players(gid)
       GamedayUtil.fetcher.fetch_players(gid)
     end
+
+    def self.fetch_milb_players(gid)
+      GamedayUtil.fetcher.fetch_milb_players(gid)
+    end
   
   
     # Fetch the plays.xml file
