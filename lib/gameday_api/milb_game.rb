@@ -25,7 +25,7 @@ module GamedayApi
     attr_accessor :away_team_city, :away_team_name, :away_division
     attr_accessor :home_code, :home_file_code, :home_team_id, :home_team_city, :home_team_name, :home_division
     attr_accessor :day, :gameday_sw, :away_games_back, :home_games_back, :away_games_back_wildcard, :home_games_back_wildcard
-    attr_accessor :venue_w_chan_loc, :gameday, :away_win, :away_loss, :home_win, :home_loss, :league
+    attr_accessor :venue_w_chan_loc, :gameday, :away_win, :away_loss, :home_win, :home_loss, :league, :home_league, :away_league
   
     attr_accessor :status  # An instance of GameStatus object
     attr_accessor :homeruns # an array of players with homeruns in the game
@@ -61,7 +61,8 @@ module GamedayApi
           @month = info["month"]
           @day = info["day"]
           @game_number = info["game_number"]
-          @league = @xml_doc.root.elements['team'].attributes['league']
+          @home_league = @xml_doc.root.elements['team'][1].attributes['league']
+          @away_league = @xml_doc.root.elements['team'][2].attributes['league']
 
           if Team.teams[@home_team_abbrev]
             @home_team_name = Team.teams[@home_team_abbrev][0]
