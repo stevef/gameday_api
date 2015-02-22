@@ -194,6 +194,10 @@ module GamedayApi
       GamedayUtil.fetcher.fetch_inningx(gid, inning_num)
     end
 
+    def self.fetch_milb_inningx(gid, inning_num)
+      GamedayUtil.fetcher.fetch_milb_inningx(gid, inning_num)
+    end
+
 
   #     inning/inning_Score.xml
     def self.fetch_inning_scores(gid) 

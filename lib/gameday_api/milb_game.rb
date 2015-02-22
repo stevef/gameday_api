@@ -3,7 +3,7 @@ require 'gameday_api/team'
 require 'gameday_api/milb_players'
 require 'gameday_api/game_status'
 require 'gameday_api/event_log'
-require 'gameday_api/inning'
+require 'gameday_api/milb_inning'
 require 'gameday_api/hitchart'
 require 'gameday_api/media'
 
@@ -468,7 +468,7 @@ module GamedayApi
       if @innings.length == 0
         inn_count = get_num_innings
         (1..get_num_innings).each do |inn|
-          inning = Inning.new
+          inning = MilbInning.new
           inning.load_from_id(@gid, inn)
           @innings << inning
         end

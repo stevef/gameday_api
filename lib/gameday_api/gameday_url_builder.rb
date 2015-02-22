@@ -97,6 +97,11 @@ module GamedayApi
       set_date_vars(year, month, day)
       "#{Gameday::GD2_MLB_BASE}/mlb/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/inning/inning_#{inning_num}.xml"
     end
+
+    def self.build_milb_inningx_url(year, month, day, gid, inning_num)
+      set_date_vars(year, month, day)
+      "#{Gameday::GD2_MILB_BASE}/year_" + @@year + "/month_" + @@month + "/day_" + @@day + "/gid_"+gid+"/inning/inning_#{inning_num}.xml"
+    end
   
   
     def self.build_inning_scores_url(year, month, day, gid)

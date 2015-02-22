@@ -221,6 +221,12 @@ module GamedayApi
       #return fetcher.fetch(url)
     end
 
+    def self.fetch_milb_inningx(gid, inning_num)
+      gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+      url = GamedayUrlBuilder.build_milb_inningx_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid, inning_num)
+      fetch(url)
+    end
+
 
   #     inning/inning_Score.xml
     def self.fetch_inning_scores(gid) 
