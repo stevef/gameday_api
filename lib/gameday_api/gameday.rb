@@ -3,14 +3,17 @@ require 'net/http'
 require 'hpricot'
 require 'erb'
 require 'gameday_api/game'
+require 'gameday_api/milb_game'
 require 'gameday_api/team'
 require 'gameday_api/box_score'
+require 'gameday_api/milb_box_score'
 
 module GamedayApi
   class Gameday
 
     # Change this to point to the server you are reading Gameday data from
     GD2_MLB_BASE = "http://gd2.mlb.com/components/game"
+    GD2_MILB_BASE = "http://gd2.mlb.com/components/game/aaa"
     
     
     def initialize

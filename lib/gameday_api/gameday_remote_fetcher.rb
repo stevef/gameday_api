@@ -70,6 +70,14 @@ module GamedayApi
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
     end
+
+    def self.fetch_milb_boxscore(gid)
+      gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+      url = GamedayUrlBuilder.build_milb_boxscore_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
+      fetch(url)
+      #fetcher = CacheFetcher.new()
+      #return fetcher.fetch(url)
+    end
   
   
     # Fetch the emailSource.xml file
@@ -95,6 +103,16 @@ module GamedayApi
     def self.fetch_game_xml(gid)
       gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
       url = GamedayUrlBuilder.build_game_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
+      fetch(url)
+      #fetcher = CacheFetcher.new()
+      #return fetcher.fetch(url)
+    end
+
+     # Fetches the game.xml file and returns its contents
+    def self.fetch_milb_game_xml(gid)
+      gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+      url = GamedayUrlBuilder.build_milb_game_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
+      puts "milb_game_xml: #{url}"
       fetch(url)
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
@@ -159,6 +177,14 @@ module GamedayApi
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
     end
+
+    def self.fetch_milb_players(gid)
+      gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+      url = GamedayUrlBuilder.build_milb_players_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid)
+      fetch(url)
+      #fetcher = CacheFetcher.new()
+      #return fetcher.fetch(url)
+    end
   
   
     # Fetch the plays.xml file
@@ -197,6 +223,12 @@ module GamedayApi
       fetch(url)
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)
+    end
+
+    def self.fetch_milb_inningx(gid, inning_num)
+      gameday_info = GamedayUtil.parse_gameday_id('gid_' + gid)
+      url = GamedayUrlBuilder.build_milb_inningx_url(gameday_info['year'] , gameday_info['month'], gameday_info['day'] , gid, inning_num)
+      fetch(url)
     end
 
 
@@ -289,6 +321,14 @@ module GamedayApi
   
     def self.fetch_notifications_full(gid)
       url = GamedayUrlBuilder.build_game_base_url(gid) + "/notifications/notifications_full.xml"
+      fetch(url)
+      #fetcher = CacheFetcher.new()
+      #return fetcher.fetch(url)
+    end
+
+    # MiLB specific URLs
+    def self.fetch_milb_games_page(year, month, day)
+      url = GamedayUrlBuilder.build_milb_day_url(year, month, day)
       fetch(url)
       #fetcher = CacheFetcher.new()
       #return fetcher.fetch(url)

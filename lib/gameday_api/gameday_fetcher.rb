@@ -99,7 +99,10 @@ module GamedayApi
     def self.fetch_boxscore(gid)
       GamedayUtil.fetcher.fetch_boxscore(gid)
     end
-  
+
+    def self.fetch_milb_boxscore(gid)
+      GamedayUtil.fetcher.fetch_milb_boxscore(gid)
+    end
   
     # Fetch the emailSource.xml file
     # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/gid_2008_04_07_atlmlb_colmlb_1/emailSource.xml
@@ -119,6 +122,11 @@ module GamedayApi
     def self.fetch_game_xml(gid)
       GamedayUtil.fetcher.fetch_game_xml(gid)
     end
+
+    def self.fetch_milb_game_xml(gid)
+      GamedayUtil.fetcher.fetch_milb_game_xml(gid)
+    end
+
   
   
     def self.fetch_game_events(gid)
@@ -157,6 +165,10 @@ module GamedayApi
     def self.fetch_players(gid)
       GamedayUtil.fetcher.fetch_players(gid)
     end
+
+    def self.fetch_milb_players(gid)
+      GamedayUtil.fetcher.fetch_milb_players(gid)
+    end
   
   
     # Fetch the plays.xml file
@@ -186,6 +198,10 @@ module GamedayApi
       GamedayUtil.fetcher.fetch_inningx(gid, inning_num)
     end
 
+    def self.fetch_milb_inningx(gid, inning_num)
+      GamedayUtil.fetcher.fetch_milb_inningx(gid, inning_num)
+    end
+
 
   #     inning/inning_Score.xml
     def self.fetch_inning_scores(gid) 
@@ -203,6 +219,12 @@ module GamedayApi
     def self.fetch_games_page(year, month, day)
       GamedayUtil.fetcher.fetch_games_page(year, month, day)
     end
+
+    # Fetches the MiLB HTML page that lists all games for the specified date
+    def self.fetch_milb_games_page(year, month, day)
+      GamedayUtil.fetcher.fetch_milb_games_page(year, month, day)
+    end
+  
   
   
     # Fetches the HTML page that lists all games for the specified date

@@ -12,7 +12,7 @@ module GamedayApi
   # Parses the MLB Gameday XML representation of a boxscore and returns data in easy to use
   # arrays and hashes.  Can be used along with a view template to easily create a displayable
   # box score.
-  class BoxScore
+  class MilbBoxScore
   
     attr_accessor :xml_data, :gid, :game, :linescore, :game_info, :home_batting_text, :away_batting_text
   
@@ -31,10 +31,10 @@ module GamedayApi
     # Loads the boxscore XML from the MLB gameday server and parses it using REXML
     def load_from_id(gid)
       @gid = gid
-      @xml_data = GamedayFetcher.fetch_boxscore(gid)
+      @xml_data = GamedayFetcher.fetch_milb_boxscore(gid)
       @xml_doc = REXML::Document.new(@xml_data)
       if @xml_doc.root
-        @game = Game.new(@gid)
+        @game = MilbGame.new(@gid)
         @game.boxscore = self
         set_basic_info
         @linescore = LineScore.new

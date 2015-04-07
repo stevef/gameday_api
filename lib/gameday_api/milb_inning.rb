@@ -5,7 +5,7 @@ require 'gameday_api/gameday_fetcher'
 module GamedayApi
 
   # This class represents a single inning of an MLB game
-  class Inning
+  class MilbInning
   
     attr_accessor :gid, :num, :away_team, :home_team, :top_atbats, :bottom_atbats, :top_actions, :bottom_actions
     attr_accessor :home_sp_id, :visiting_sp_id
@@ -18,7 +18,7 @@ module GamedayApi
       @bottom_actions = []
       @gid = gid
       begin
-        @xml_data = GamedayFetcher.fetch_inningx(gid, inning)
+        @xml_data = GamedayFetcher.fetch_milb_inningx(gid, inning)
         @xml_data_first_inning = GamedayFetcher.fetch_inningx(gid, 1)
         @xml_first_inning = REXML::Document.new(@xml_data_first_inning)
         @xml_doc = REXML::Document.new(@xml_data)

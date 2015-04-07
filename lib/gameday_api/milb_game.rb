@@ -1,15 +1,15 @@
 require 'gameday_api/gameday_util'
 require 'gameday_api/team'
-require 'gameday_api/players'
+require 'gameday_api/milb_players'
 require 'gameday_api/game_status'
 require 'gameday_api/event_log'
-require 'gameday_api/inning'
+require 'gameday_api/milb_inning'
 require 'gameday_api/hitchart'
 require 'gameday_api/media'
 
 module GamedayApi
   # This class represents a single MLB game
-  class Game
+  class MilbGame
   
     attr_accessor :gid, :home_team_name, :home_team_abbrev, :visit_team_name, :visit_team_abbrev, 
                   :year, :month, :day, :game_number, :visiting_team, :home_team, :stadium_id
@@ -25,7 +25,7 @@ module GamedayApi
     attr_accessor :away_team_city, :away_team_name, :away_division
     attr_accessor :home_code, :home_file_code, :home_team_id, :home_team_city, :home_team_name, :home_division
     attr_accessor :day, :gameday_sw, :away_games_back, :home_games_back, :away_games_back_wildcard, :home_games_back_wildcard
-    attr_accessor :venue_w_chan_loc, :gameday, :away_win, :away_loss, :home_win, :home_loss, :league
+    attr_accessor :venue_w_chan_loc, :gameday, :away_win, :away_loss, :home_win, :home_loss, :league, :home_league, :away_league
   
     attr_accessor :status  # An instance of GameStatus object
     attr_accessor :homeruns # an array of players with homeruns in the game
@@ -46,7 +46,7 @@ module GamedayApi
       team = Team.new('')
       if gid
         @gid = gid     
-        @xml_data = GamedayFetcher.fetch_game_xml(gid)
+        @xml_data = GamedayFetcher.fetch_milb_game_xml(gid)
         if @xml_data && @xml_data.size > 0
           @xml_doc = REXML::Document.new(@xml_data)
           @game_type = @xml_doc.root.attributes["type"]
@@ -61,6 +61,9 @@ module GamedayApi
           @month = info["month"]
           @day = info["day"]
           @game_number = info["game_number"]
+          @home_league = @xml_doc.root.elements['team[1]'].attributes['league']
+          @away_league = @xml_doc.root.elements['team[2]'].attributes['league']
+
           if Team.teams[@home_team_abbrev]
             @home_team_name = Team.teams[@home_team_abbrev][0]
           else
@@ -72,8 +75,7 @@ module GamedayApi
             @visit_team_name = @visit_team_abbrev
           end
         else
-          #raise ArgumentError, "Could not find game.xml"
-          return false
+          raise ArgumentError, "Could not find game.xml"
         end
       end
     end
@@ -241,7 +243,7 @@ module GamedayApi
       puts '########### Game.find_by_date'
       begin 
         games = []
-        games_page = GamedayFetcher.fetch_games_page(year, month, day)
+        games_page = GamedayFetcher.fetch_milb_games_page(year, month, day)
         if games_page
           @hp = Hpricot(games_page) 
           a = @hp.at('ul')  
@@ -254,9 +256,10 @@ module GamedayApi
               str = link.inner_html
               gid = str[5..str.length-2]
               begin
-                game = Game.new(gid)
+                game = MilbGame.new(gid)
                 games.push game
-              rescue
+              rescue Exception => err
+                puts "err: #{err}"
                 puts "Could not create game object for #{year}, #{month}, #{day} - #{gid}"
               end
             end
@@ -276,7 +279,7 @@ module GamedayApi
     #    [1] array of all home players
     def get_rosters
       if !@rosters
-        players = Players.new
+        players = MilbPlayers.new
         players.load_from_id(@gid)
         @rosters = players.rosters
       end
@@ -296,10 +299,11 @@ module GamedayApi
     # Returns a BoxScore object representing the boxscore for this game
     def get_boxscore
       if !@boxscore
-        box = BoxScore.new
+        box = MilbBoxScore.new
         box.load_from_id(self.gid)
         @boxscore = box
       end
+      puts "GOT BOXSCORE: #{@boxscore.inspect}"
       @boxscore
     end
   
@@ -464,7 +468,7 @@ module GamedayApi
       if @innings.length == 0
         inn_count = get_num_innings
         (1..get_num_innings).each do |inn|
-          inning = Inning.new
+          inning = MilbInning.new
           inning.load_from_id(@gid, inn)
           @innings << inning
         end
@@ -534,7 +538,7 @@ module GamedayApi
     #
     def get_umpires
       if !@players
-        @players = Players.new
+        @players = MilbPlayers.new
         @players.load_from_id(@gid)
       end
       @players.umpires
