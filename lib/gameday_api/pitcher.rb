@@ -9,7 +9,7 @@ module GamedayApi
     attr_accessor :team_abbrev, :gid, :pid, :first_name, :last_name, :jersey_number
     attr_accessor :era, :ip, :hits, :runs, :bb, :so, :sv,  :hr, :hbp
     attr_accessor :height, :weight, :bats, :throws, :dob, :position
-    attr_accessor :opponent_season, :opponent_career, :opponent_empty, :opponent_men_on, :opponent_risp
+    attr_accessor :opponent_season, :opponent_career, :opponent_empty, :opponent_men_on, :opponent_risp, :opponent_month
     attr_accessor :opponent_loaded, :opponent_vs_l, :opponent_vs_r
   
     attr_accessor :game, :fip
@@ -32,7 +32,7 @@ module GamedayApi
       @throws = @xml_doc.root.attributes["throws"]
       @dob = @xml_doc.root.attributes['dob']
       set_opponent_stats
-      @fip = get_fip('game')
+      @fip = get_fip('season')
     end
 
     def load_from_year_id(year, pid)
@@ -64,20 +64,26 @@ module GamedayApi
 
 
 
-    def get_fip(game_or_year)
-      if game_or_year == 'game' #will not be as accurate as MLB does not provide HBP for game/pitcher.xml for some reason
+    def get_fip(season_or_year)
+      if season_or_year == 'season' #will not be as accurate as MLB does not provide HBP for game/pitcher.xml for some reason
         fip_hr = @opponent_season.hr.to_f * 13
         fip_walks = @opponent_season.bb.to_f * 3
         fip_so = @opponent_season.so.to_f * 2
         fip_ip = @opponent_season.ip.to_f
         fip = (((fip_hr + fip_walks) - fip_so)/fip_ip) + 3.2
-      else
+      elsif season_or_year == 'year'
         fip_hr = @hr.to_f * 13
         fip_walks = @bb.to_f
         fip_hbp = @hbp.to_f
         fip_so = @so.to_f * 2
         fip_ip = @ip.to_f
         fip = ((fip_hr + (3 *(fip_walks+fip_hbp)) - fip_so)/fip_ip) + 3.2
+      elsif season_or_year == 'month'
+        fip_hr = @opponent_month.hr.to_f * 13
+        fip_walks = @opponent_month.bb.to_f * 3
+        fip_so = @opponent_month.so.to_f * 2
+        fip_ip = @opponent_month.ip.to_f
+        fip = (((fip_hr + fip_walks) - fip_so)/fip_ip) + 3.2
       end
     end
   
@@ -149,6 +155,7 @@ module GamedayApi
       @opponent_loaded = OpponentStats.new(@xml_doc.root.elements["Loaded"])
       @opponent_vs_l = OpponentStats.new(@xml_doc.root.elements["vs_LHB"])
       @opponent_vs_r = OpponentStats.new(@xml_doc.root.elements["vs_RHB"])
+      @opponent_month = OpponentStats.new(@xml_doc.root.elements["Month"])
     end
   
   end

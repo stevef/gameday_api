@@ -27,7 +27,6 @@ module GamedayApi
       fetch(url)
     end
   
-  
     # Fetch the master scoreboard file
     # Sample URL:  http://gd2.mlb.com/components/game/mlb/year_2008/month_04/day_07/master_scoreboard.xml
     def self.fetch_scoreboard(year, month, day)
