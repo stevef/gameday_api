@@ -4,17 +4,17 @@ module GamedayApi
 
   # This class represents a single pitcher whom appeared in an MLB game
   class Pitcher < Player
-  
+
     # attributes read from the pitchers/(pid).xml file
     attr_accessor :team_abbrev, :gid, :pid, :first_name, :last_name, :jersey_number
     attr_accessor :era, :ip, :hits, :runs, :bb, :so, :sv,  :hr, :hbp
     attr_accessor :height, :weight, :bats, :throws, :dob, :position
     attr_accessor :opponent_season, :opponent_career, :opponent_empty, :opponent_men_on, :opponent_risp, :opponent_month
     attr_accessor :opponent_loaded, :opponent_vs_l, :opponent_vs_r
-  
+
     attr_accessor :game, :fip
-  
-  
+
+
     # Loads a Pitcher object given a game id and a player id
     def load_from_id(gid, pid)
       @gid = gid
@@ -52,7 +52,7 @@ module GamedayApi
 
       @fip = get_fip('year')
     end
-  
+
     # Returns an array of PitchingAppearance objects for all of the pitchers starts
     def get_all_starts(year)
       results = []
@@ -62,15 +62,13 @@ module GamedayApi
       end
     end
 
-
-
     def get_fip(season_or_year)
-      if season_or_year == 'season' #will not be as accurate as MLB does not provide HBP for game/pitcher.xml for some reason
+      if season_or_year == 'season' #will not be as accurate as MLB does not provide HBP for game/pitcher.xml in season for some reason
         fip_hr = @opponent_season.hr.to_f * 13
         fip_walks = @opponent_season.bb.to_f * 3
         fip_so = @opponent_season.so.to_f * 2
         fip_ip = @opponent_season.ip.to_f
-        fip = (((fip_hr + fip_walks) - fip_so)/fip_ip) + 3.2
+        fip = (((fip_hr + (3 * fip_walks)) - fip_so)/fip_ip) + 3.2
       elsif season_or_year == 'year'
         fip_hr = @hr.to_f * 13
         fip_walks = @bb.to_f
@@ -86,8 +84,7 @@ module GamedayApi
         fip = (((fip_hr + fip_walks) - fip_so)/fip_ip) + 3.2
       end
     end
-  
-  
+
     # Returns an array of the atbats against this pitcher during this game
     def get_vs_ab
       results = []
@@ -99,8 +96,7 @@ module GamedayApi
       end
       results
     end
-  
-  
+
     # Returns an array of pitches thrown by this pitcher during this game
     def get_pitches
       results = []
@@ -110,15 +106,14 @@ module GamedayApi
       end
       results.flatten
     end
-  
+
     def get_game
       if !@game
         @game = Game.new(@gid)
       end
       @game
     end
-  
-  
+
     # Returns an array of pitcher ids for the game specified
     # pitchers are found by looking in the gid/pitchers directory on gameday
     def self.get_all_ids_for_game(gid)
@@ -126,7 +121,7 @@ module GamedayApi
       results = []
       if pitchers_page
         doc = Hpricot(pitchers_page)
-        a = doc.at('ul')  
+        a = doc.at('ul')
         if a
           (a/"a").each do |link|
             # look at each link inside of a ul tag
@@ -142,10 +137,9 @@ module GamedayApi
       end
       results
     end
-  
-  
+
     private
-  
+
     def set_opponent_stats
       @opponent_season = OpponentStats.new(@xml_doc.root.elements["season"])
       @opponent_career = OpponentStats.new(@xml_doc.root.elements["career"])
@@ -157,13 +151,12 @@ module GamedayApi
       @opponent_vs_r = OpponentStats.new(@xml_doc.root.elements["vs_RHB"])
       @opponent_month = OpponentStats.new(@xml_doc.root.elements["Month"])
     end
-  
-  end
 
+  end
 
   class OpponentStats
     attr_accessor :des, :avg, :ab, :hr, :bb, :so, :ip
-  
+
     def initialize(element)
       if element.attributes['des']
         @des = element.attributes['des']
