@@ -1,0 +1,14 @@
+PATH
+  remote: .
+  specs:
+    gameday_api (0.2.7)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gameday_api!
