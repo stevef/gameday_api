@@ -2,8 +2,8 @@
 require File.expand_path('../lib/gameday_api/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Timothy Fisher"]
-  gem.email         = ["timothyf@gmail.com"]
+  gem.authors       = ["Timothy Fisher", "Ian Andersen"]
+  gem.email         = ["timothyf@gmail.com", "ianderse@mac.com"]
   gem.description   = %q{An API for processing live MLB statistics.}
   gem.summary       = %q{An API for processing live MLB statistics.}
   gem.homepage      = %q{http://github.com/timothyf/gameday_api}
