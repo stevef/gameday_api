@@ -6,9 +6,11 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    require_all (1.3.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   gameday_api!
+  require_all
