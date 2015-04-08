@@ -1,16 +1,14 @@
-require 'gameday_api/player'
-
 module GamedayApi
   # This class represents a single batter whom appeared in an MLB game
   class Batter < Player
-    
+
     # attributes read from the batters/(pid).xml file
     attr_accessor :team_abbrev, :pid, :pos, :first_name, :last_name, :jersey_number
     attr_accessor :height, :weight, :bats, :throws, :dob
     attr_accessor :season_stats, :career_stats, :month_stats, :empty_stats
     attr_accessor :men_on_stats, :risp_stats, :loaded_stats, :vs_lhp_stats, :vs_rhp_stats
-  
-  
+
+
     def load_from_id(gid, pid)
       @gid = gid
       @pid = pid
@@ -27,8 +25,8 @@ module GamedayApi
       @dob = @xml_doc.root.attributes['dob']
       set_batting_stats
     end
-  
-  
+
+
     # Returns an array of all the appearances (Batting) made by this player
     # for the season specified, in which the player had more than 1 hit.
     def get_multihit_appearances(year)
@@ -42,8 +40,8 @@ module GamedayApi
       end
       mh_appearances
     end
-  
-  
+
+
     # Returns an array of batter ids for the game specified
     # batters are found by looking in the gid/batters directory on gameday
     def self.get_all_ids_for_game(gid)
@@ -51,7 +49,7 @@ module GamedayApi
       results = []
       if batters_page
         doc = Hpricot(batters_page)
-        a = doc.at('ul')  
+        a = doc.at('ul')
         if a
           (a/"a").each do |link|
             # look at each link inside of a ul tag
@@ -67,10 +65,10 @@ module GamedayApi
       end
       results
     end
-  
-  
+
+
     private
-  
+
     def set_batting_stats
       @season_stats = BattingStats.new(@xml_doc.root.elements["season"])
       @career_stats = BattingStats.new(@xml_doc.root.elements["career"])
@@ -82,13 +80,13 @@ module GamedayApi
       @vs_lhp_stats = BattingStats.new(@xml_doc.root.elements["vs_LHP"])
       @vs_rhp_stats = BattingStats.new(@xml_doc.root.elements["vs_RHP"])
     end
-  
+
   end
 
 
   class BattingStats
     attr_accessor :des, :avg, :ab, :hr, :bb, :so
-  
+
     def initialize(element)
       if element.attributes['des']
         @des = element.attributes['des']

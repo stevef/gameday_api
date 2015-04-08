@@ -2,11 +2,6 @@ require 'rubygems'
 require 'net/http'
 require 'hpricot'
 require 'erb'
-require 'gameday_api/game'
-require 'gameday_api/milb_game'
-require 'gameday_api/team'
-require 'gameday_api/box_score'
-require 'gameday_api/milb_box_score'
 
 module GamedayApi
   class Gameday
@@ -14,22 +9,22 @@ module GamedayApi
     # Change this to point to the server you are reading Gameday data from
     GD2_MLB_BASE = "http://gd2.mlb.com/components/game"
     GD2_MILB_BASE = "http://gd2.mlb.com/components/game/aaa"
-    
-    
+
+
     def initialize
       super
     end
-  
-  
+
+
     # Returns an array of game id's for the given date
     def get_all_gids_for_date(year, month, day)
-      begin 
+      begin
         gids = []
         url = GamedayUtil.build_day_url(year, month, date)
         connection = GamedayUtil.get_connection(url)
         if connection
-          @hp = Hpricot(connection) 
-          a = @hp.at('ul')  
+          @hp = Hpricot(connection)
+          a = @hp.at('ul')
           (a/"a").each do |link|
             if link.inner_html.include?('gid')
               str = link.inner_html
@@ -43,8 +38,8 @@ module GamedayApi
         puts "No games data found for #{year}, #{month}, #{day}."
       end
     end
-  
-  
+
+
     # Converts numbers to two character strings by prepending a '0' if number
     # is less than 10.
     def convert_to_two_digit_str(number)
@@ -54,7 +49,7 @@ module GamedayApi
         return number.to_s
       end
     end
-  
+
   end
 end
 

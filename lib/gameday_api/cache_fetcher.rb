@@ -3,13 +3,13 @@ require 'md5'
 
 module GamedayApi
   class CacheFetcher
-  
+
      def initialize(cache_dir=File.expand_path(File.dirname(__FILE__)) + '/tmp')
         # this is the dir where we store our cache
         @cache_dir = cache_dir
      end
-   
-   
+
+
       def fetch(url)
         file = MD5.hexdigest(url)
         file_path = File.join("", @cache_dir, file)
@@ -28,6 +28,6 @@ module GamedayApi
         end
         return File.new(file_path)
      end
-   
+
   end
 end

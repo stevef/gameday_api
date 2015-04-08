@@ -1,13 +1,11 @@
-require 'gameday_api/roster'
-
 module GamedayApi
 
   # This class represents the players.xml file found on the gameday server for each MLB game.
   #  The players.xml file contains a listing of all players on the home and away teams for the specified game
   class Players
-  
+
     attr_accessor :xml_data, :gid, :venue, :date, :rosters, :umpires
-  
+
     # Loads the players XML from the MLB gameday server and parses it using REXML
     def load_from_id(gid)
       @gid = gid
@@ -20,8 +18,8 @@ module GamedayApi
         self.set_umpires
       end
     end
-  
-  
+
+
     def set_rosters()
       away_roster = Roster.new
       away_roster.init(@xml_doc.root.elements["team[@type='away']"], self.gid)
@@ -30,8 +28,8 @@ module GamedayApi
       home_roster.init(@xml_doc.root.elements["team[@type='home']"], self.gid)
       @rosters << home_roster
     end
-  
-  
+
+
     def set_umpires()
       @umpires['home'] = @xml_doc.root.elements["umpires/umpire[@position='home']"].attributes["name"]
       @umpires['first'] = @xml_doc.root.elements["umpires/umpire[@position='first']"].attributes["name"]
@@ -44,7 +42,7 @@ module GamedayApi
       @umpires['second_id'] = @xml_doc.root.elements["umpires/umpire[@position='second']"].attributes["id"]
       @umpires['third_id'] = @xml_doc.root.elements["umpires/umpire[@position='third']"].attributes["id"]
     end
-  
-  
+
+
   end
 end

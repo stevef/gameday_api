@@ -1,10 +1,8 @@
-require 'gameday_api/gameday_fetcher'
-
 module GamedayApi
 
   # This class contains data representing a linescore for a single game not yet played.
   class FutureLineScore
-  
+
     attr_accessor :xml_doc
     attr_accessor :home_team_name, :away_team_name, :home_team_abbr, :away_team_abbr
     attr_accessor :home_pitcher, :away_pitcher, :venue
