@@ -1,6 +1,4 @@
-require 'hpricot'
 require 'rexml/document'
-
 
 module GamedayApi
   # Parses the MLB Gameday XML representation of a boxscore and returns data in easy to use
