@@ -1,15 +1,14 @@
 require 'open-uri'
 require 'yaml'
 
-
 module GamedayApi
 
   # This class provides a variety of utility methods that are used in other classes
   class GamedayUtil
-  
+
     @@fetcher = ''
-  
-  
+
+
     # Returns an instance of the configured fetcher, either remote or local
     def self.fetcher
       if @@fetcher == ''
@@ -21,13 +20,13 @@ module GamedayApi
         return GamedayRemoteFetcher
       end
     end
-  
-  
+
+
     def self.set_fetcher(fetcher)
       @@fetcher = fetcher
     end
-  
-  
+
+
     # Parses a string with the date format of YYYYMMDD into an array
     # with the following elements:
     #    [0] = year
@@ -37,10 +36,10 @@ module GamedayApi
       results = []
       results << date[0..3]
       results << date[4..5]
-      results << date[6..7] 
+      results << date[6..7]
     end
-  
-  
+
+
     # Converts a digit into a 2 character string, prepended with '0' if necessary
     def self.convert_digit_to_string(digit)
       if digit<10
@@ -49,7 +48,7 @@ module GamedayApi
         return digit.to_s
       end
     end
-  
+
     # Example gameday_gid = gid_2009_06_21_milmlb_detmlb_1
     def self.parse_gameday_id(gameday_gid)
       gameday_info = {}
@@ -73,8 +72,8 @@ module GamedayApi
         set_fetcher(settings['fetcher'])
       end
   	end
-  
-  
+
+
     def self.get_connection(url)
       self.read_config
       begin
@@ -88,8 +87,8 @@ module GamedayApi
         puts 'Could not open connection'
       end
     end
-  
-  
+
+
     def self.net_http
       self.read_config
       if !@@proxy_addr.empty?
@@ -98,20 +97,20 @@ module GamedayApi
         return Net::HTTP
       end
     end
-  
-  
+
+
     def self.read_file(filename)
-      IO.readlines(filename,'')[0].to_s  
+      IO.readlines(filename,'')[0].to_s
     end
-  
-  
+
+
     def self.save_file(filename, data)
       File.open(filename, 'w') {|f| f.write(data) }
     end
-  
-  
+
+
     def self.is_date_valid(month, date)
-      if (month == 4 && date == 31) ||  
+      if (month == 4 && date == 31) ||
          (month == 6 && date == 31) ||
          (month == 9 && date == 31)
          return false
@@ -121,10 +120,10 @@ module GamedayApi
       end
       return true
     end
-  
-  
+
+
     private
-  
+
     def self.set_proxy_info(settings)
       @@proxy_addr, @@proxy_port = '', ''
       if settings['proxy']
@@ -132,8 +131,8 @@ module GamedayApi
         @@proxy_port = settings['proxy']['port']
       end
     end
-  
-  
-  
+
+
+
   end
 end

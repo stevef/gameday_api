@@ -1,5 +1,3 @@
-require 'gameday_api/db_importer'
-
 db = DbImporter.new('localhost','root','','pitchfx')
 
 #db.import_for_month('2010','04')
