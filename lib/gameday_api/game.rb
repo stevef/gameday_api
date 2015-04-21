@@ -40,6 +40,7 @@ module GamedayApi
     attr_accessor :starting_home_second_id, :starting_away_second_id
     attr_accessor :starting_home_third_id, :starting_away_third_id
     attr_accessor :starting_home_ss_id, :starting_away_ss_id
+    attr_accessor :starting_home_dh_id, :starting_away_dh_id
   
     def initialize(gid)
       @innings = []
@@ -161,6 +162,8 @@ module GamedayApi
         @starting_away_cf_id = away_roster.players.find {|p| p if p.game_position=='CF'}.pid
         @starting_home_rf_id = home_roster.players.find {|p| p if p.game_position=='RF'}.pid
         @starting_away_rf_id = away_roster.players.find {|p| p if p.game_position=='RF'}.pid
+        @starting_away_dh_id = away_roster.players.find {|p| p if p.game_position=='DH'}.pid
+        @starting_home_dh_id = home_roster.players.find {|p| p if p.game_position=='DH'}.pid
       end
     
     
