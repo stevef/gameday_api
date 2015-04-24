@@ -162,8 +162,11 @@ module GamedayApi
         @starting_away_cf_id = away_roster.players.find {|p| p if p.game_position=='CF'}.pid
         @starting_home_rf_id = home_roster.players.find {|p| p if p.game_position=='RF'}.pid
         @starting_away_rf_id = away_roster.players.find {|p| p if p.game_position=='RF'}.pid
-        @starting_away_dh_id = away_roster.players.find {|p| p if p.game_position=='DH'}.pid
-        @starting_home_dh_id = home_roster.players.find {|p| p if p.game_position=='DH'}.pid
+        begin
+          @starting_away_dh_id = away_roster.players.find {|p| p if p.game_position=='DH'}.pid
+          @starting_home_dh_id = home_roster.players.find {|p| p if p.game_position=='DH'}.pid
+        rescue
+        end
       end
     
     
